@@ -1,0 +1,2 @@
+timelimitmin,mod_quizp
+timelimitsec,mod_quizp

@@ -1,0 +1,21 @@
+{
+  "name": "moodle-mod_quizp-util",
+  "builds": {
+    "moodle-mod_quizp-util-base": {
+      "jsfiles": [
+        "base.js"
+      ]
+    },
+    "moodle-mod_quizp-util-slot": {
+      "jsfiles": [
+        "slot.js"
+      ]
+    }
+    ,
+    "moodle-mod_quizp-util-page": {
+      "jsfiles": [
+        "page.js"
+      ]
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+    "moodle-mod_quizp-quizpbase": {
+        "requires": [
+            "base",
+            "node"
+        ]
+    }
+}

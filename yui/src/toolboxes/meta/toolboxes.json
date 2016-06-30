@@ -1,0 +1,14 @@
+{
+    "moodle-mod_quizp-toolboxes": {
+        "requires": [
+            "base",
+            "node",
+            "event",
+            "event-key",
+            "io",
+            "moodle-mod_quizp-quizpbase",
+            "moodle-mod_quizp-util-slot",
+            "moodle-core-notification-ajaxexception"
+        ]
+    }
+}
