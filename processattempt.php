@@ -73,10 +73,11 @@ if(!optional_param('finishattempt', false, PARAM_BOOL)){
                 $answers = $DB->get_records('question_answers', ['question' => $q->questionid]);
                 $redirect = true;
                 for ($i=0; $i < count($answers); $i++) { 
-                    if(optional_param('q'.$at->uniqueid.':'.$index . '_choice'.$i, 0, PARAM_INT) != 0){
+                    if(optional_param('q'.$at->uniqueid.':'.$q->slot . '_choice'.$i, 0, PARAM_INT) != 0){
                         $redirect = false;
                     }
                 }
+                
                 if($redirect){
                     redirect($attemptobj->attempt_url(null, $thispage));
                 }
