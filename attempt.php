@@ -149,4 +149,12 @@ if ($attemptobj->is_last_page($page)) {
     $nextpage = $page + 1;
 }
 
+$res_to_all_q = get_string('res_to_all_q', 'mod_quizp');
+if(optional_param('showalert', 0, PARAM_INT)){
+    echo "
+        <div class='alert alert-warning fade in'>
+            {$res_to_all_q}
+        </div>
+    ";
+}
 echo $output->attempt_page($attemptobj, $page, $accessmanager, $messages, $slots, $id, $nextpage);

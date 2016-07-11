@@ -941,3 +941,5 @@ $string['yourfinalgradeis'] = 'Your final grade for this quizp is {$a}.';
 
 $string['timelimitmin'] = 'Time limit (minutes)';
 $string['timelimitsec'] = 'Time limit (seconds)';
+
+$string['res_to_all_q'] = 'Answer all questions to continue';

@@ -67,7 +67,10 @@ if(!optional_param('finishattempt', false, PARAM_BOOL)){
             if(!isset($_POST['q'.$at->uniqueid.':'.$q->slot . '_choice0'])){
                 $answer = optional_param('q'.$at->uniqueid.':'.$q->slot.'_answer', '', PARAM_TEXT);
                 if($answer == ''){
-                    redirect($attemptobj->attempt_url(null, $thispage));
+                    $params = $attemptobj->attempt_url(null, $thispage)->params();
+                    $params['showalert'] = 1;
+                    $url = new moodle_url('/mod/quizp/attempt.php', $params);
+                    redirect($url);
                 }
             } else {
                 $answers = $DB->get_records('question_answers', ['question' => $q->questionid]);
@@ -79,7 +82,10 @@ if(!optional_param('finishattempt', false, PARAM_BOOL)){
                 }
                 
                 if($redirect){
-                    redirect($attemptobj->attempt_url(null, $thispage));
+                    $params = $attemptobj->attempt_url(null, $thispage)->params();
+                    $params['showalert'] = 1;
+                    $url = new moodle_url('/mod/quizp/attempt.php', $params);
+                    redirect($url);
                 }
             }
         }
