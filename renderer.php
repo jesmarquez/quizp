@@ -430,11 +430,71 @@ class mod_quizp_renderer extends plugin_renderer_base {
      */
     public function attempt_page($attemptobj, $page, $accessmanager, $messages, $slots, $id,
             $nextpage) {
+        global $PAGE;
+        $PAGE->requires->js('/mod/quizp/jquery/jquery-1.12.4.min.js');
+
+
         $output = '';
         $output .= $this->header();
         $output .= $this->quizp_notices($messages);
         $output .= $this->attempt_form($attemptobj, $page, $slots, $id, $nextpage);
         $output .= $this->footer();
+        $output .= '
+            <script>
+                $(document).on("ready", function(){
+                    $("#responseform input[type=\'submit\']").prop(\'disabled\', true);
+                    var $query = $;
+                    $("#responseform input[type=\'radio\'], #responseform .answer input[type=\'checkbox\']").click(function(){
+                        validatequiz();
+                    })
+
+                    function validatequiz(){
+                        //Validate radios
+                        var questions = [];
+                        $query("#responseform input[type=\'radio\']").each(function(index){
+                            if(questions.indexOf($query(this).attr(\'name\')) == -1){
+                                questions.push($query(this).attr(\'name\'));
+                            }
+                        })
+
+                        var pass = true;
+                        for (i = 0; i < questions.length; i++) { 
+                            if($query("input[name=\'" + questions[i] + "\']:checked").val() == "undefined"){
+                                pass = false;    
+                            }
+                        }
+                        
+                        if(pass){
+                            if(validatecheckbox()){
+                                $query("#responseform input[type=\'submit\']").prop(\'disabled\', false);    
+                            } else {
+                                $query("#responseform input[type=\'submit\']").prop(\'disabled\', true);
+                            }
+                        } else {
+                            $query("#responseform input[type=\'submit\']").prop(\'disabled\', true);
+                        }
+                    }
+
+                    function validatecheckbox(){
+                        //Validate checkbox
+                        var pass = true;
+                        $query("#responseform .answer").each(function(index){
+                            if($query(this).find("input[type=\'checkbox\']").length > 0){
+                                pass = false;
+                                if($query(this).find("input[type=\'checkbox\']:checked").length > 0){
+                                    pass = true;
+                                } else {
+                                    return false;
+                                }                         
+                            }
+                        });
+                        return pass;
+                    }
+
+                    validatequiz();
+                })
+            </script>
+        ';
         return $output;
     }
 
