@@ -442,8 +442,17 @@ class mod_quizp_renderer extends plugin_renderer_base {
         $output .= '
             <script>
                 $(document).on("ready", function(){
-                    $("#responseform input[type=\'submit\']").prop(\'disabled\', true);
                     var $query = $;
+                    $("#responseform input[type=\'submit\']").click(function(event){
+                        if(!validatequiz()){
+                            event.preventDefault();
+                            if($query("#questions-alert").length == 0){
+                                $query("<div id=\'questions-alert\' class=\'alert alert-warning fade in\']>'.get_string('selectanswers', 'mod_quizp').'</div>").insertBefore("#responseform input[type=\'submit\']");
+                            }                          
+                            return false;
+                        }
+                    })
+
                     $("#responseform input[type=\'radio\'], #responseform .answer input[type=\'checkbox\']").click(function(){
                         validatequiz();
                     })
@@ -459,19 +468,25 @@ class mod_quizp_renderer extends plugin_renderer_base {
 
                         var pass = true;
                         for (i = 0; i < questions.length; i++) { 
-                            if($query("input[name=\'" + questions[i] + "\']:checked").val() == "undefined"){
+                            if(typeof $query("input[name=\'" + questions[i] + "\']:checked").val() == "undefined"){
+                                $query("input[name=\'" + questions[i] + "\']").parent().parent().css({
+                                    "background-color" : "#ff9500",
+                                    "border-radius" : "5px"
+                                })
+
                                 pass = false;    
+                            } else {
+                                $query("input[name=\'" + questions[i] + "\']").parent().parent().css({
+                                    "background-color" : "transparent",
+                                    "border-radius" : "5px"
+                                })
                             }
                         }
-                        
-                        if(pass){
-                            if(validatecheckbox()){
-                                $query("#responseform input[type=\'submit\']").prop(\'disabled\', false);    
-                            } else {
-                                $query("#responseform input[type=\'submit\']").prop(\'disabled\', true);
-                            }
+
+                        if(pass && validatecheckbox()){
+                            return true;
                         } else {
-                            $query("#responseform input[type=\'submit\']").prop(\'disabled\', true);
+                            return false;
                         }
                     }
 
@@ -480,18 +495,11 @@ class mod_quizp_renderer extends plugin_renderer_base {
                         var pass = true;
                         $query("#responseform .answer").each(function(index){
                             if($query(this).find("input[type=\'checkbox\']").length > 0){
-                                pass = false;
-                                if($query(this).find("input[type=\'checkbox\']:checked").length > 0){
-                                    pass = true;
-                                } else {
-                                    return false;
-                                }                         
+                                pass = false;                       
                             }
                         });
                         return pass;
                     }
-
-                    validatequiz();
                 })
             </script>
         ';

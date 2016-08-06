@@ -943,3 +943,5 @@ $string['timelimitmin'] = 'Time limit (minutes)';
 $string['timelimitsec'] = 'Time limit (seconds)';
 
 $string['res_to_all_q'] = 'Answer all questions to continue';
+
+$string['selectanswers'] = 'Please Select an answer in the marked questions';
