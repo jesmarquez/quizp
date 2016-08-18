@@ -470,7 +470,7 @@ class mod_quizp_renderer extends plugin_renderer_base {
                         for (i = 0; i < questions.length; i++) { 
                             if(typeof $query("input[name=\'" + questions[i] + "\']:checked").val() == "undefined"){
                                 $query("input[name=\'" + questions[i] + "\']").parent().parent().css({
-                                    "background-color" : "#ff9500",
+                                    "background-color" : "#ffebeb",
                                     "border-radius" : "5px"
                                 })
 
